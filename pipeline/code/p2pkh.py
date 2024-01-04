@@ -22,19 +22,24 @@ class P2PKH_Address(BaseService):
         tx = self.bitcoin.sign(tx, 0, private_key)
         return tx
     
-    def broadcast_tx(self, tx: Tx):
+    def broadcast_tx(self, tx: Tx) -> str:
         tx_serialize = serialize(tx)
         return self.bitcoin.pushtx(tx_serialize)
 
-    def get_address(self, private_key: str):
+    def get_address(self, private_key: str) -> str:
         return self.bitcoin.privtop2pkh(private_key)
+    
+    def get_balance(self, address_id: str) -> int:
+        address_info = self.bitcoin.unspent(address_id)
+        balance = sum([item["value"] for item in address_info])
+        return balance
 
 
 if __name__ == "__main__":
     p2pkh_address = P2PKH_Address()
 
-    private_key = "cRZmg7HCfw7kwKJxn6rLc8AqmK5xjcjwanbZj9B7aLJB5AcVMFz2"
-    address_output = "tb1qt2pejs0plq33pwskal2jqtx8q3umwq3w2qvjlr"
+    private_key = "cS2Bz7tdXKsFBKiFLGhNFVMrnZVxpFR96GShmtfcc95NdXARLTAZ"
+    address_output = "2MvukeKaPBWwfHJBAZ72P7nm45HKPG91Wg3"
     amount = 8000
     fee = 750
     

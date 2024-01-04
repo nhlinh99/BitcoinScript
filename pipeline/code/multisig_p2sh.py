@@ -36,7 +36,7 @@ class Multisig_Address(BaseService):
         amount_send_valid = min(amount, balance - fee)
         return [{'value': amount_send_valid, 'address': address}]
     
-    def create_transaction(self, tx_in: ElectrumXUnspentResponse, tx_out, private_keys) -> Tx:
+    def create_transaction(self, tx_in: ElectrumXUnspentResponse, tx_out, redeem_script:str, private_keys: List[str]) -> Tx:
         tx = self.bitcoin.mktx(tx_in, tx_out)
         list_sign = []
         for key in private_keys:
@@ -64,7 +64,7 @@ if __name__ == "__main__":
 
     private_keys = ["cNQdZ8xMLQ3z1RCumqvie74zPjejsxKxVT39QgSpkpPgy9HtaCsw",
                 "cVt7izDnc1W9Rwk83vbus8bwAmZjfAWALkNXGWkTjivMwKUmfMfA"]
-    address_output = "tb1qt2pejs0plq33pwskal2jqtx8q3umwq3w2qvjlr"
+    address_output = "2MvukeKaPBWwfHJBAZ72P7nm45HKPG91Wg3"
     num_signs = 2
     amount = 8000
     fee = 750
@@ -75,7 +75,7 @@ if __name__ == "__main__":
     balance = sum([item["value"] for item in tx_in])
     tx_out = multisig_address.create_txout(address_output, amount=amount, balance=balance)
     tx_out += multisig_address.create_txout(multisig_address.get_address(redeem_script), amount=balance-amount-fee, balance=balance)
-    tx = multisig_address.create_transaction(tx_in, tx_out, private_keys)
+    tx = multisig_address.create_transaction(tx_in, tx_out, redeem_script, private_keys)
     result = multisig_address.broadcast_tx(tx)
     print(result)
     if result:
