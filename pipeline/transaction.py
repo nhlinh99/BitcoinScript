@@ -57,11 +57,13 @@ class TransactionPipeline(BaseService):
         tx = self.multisig_address.create_transaction(tx_in, tx_out, redeem_script, private_keys)
         transaction_id = self.multisig_address.broadcast_tx(tx)
         if transaction_id:
-            result_transaction = Transaction(transaction_id=transaction_id,
+            result_transaction = MultisigTransaction(transaction_id=transaction_id,
                                              timestamp=self.get_timezone(),
                                              address_input=MultisigAddress(list_address=[Address(private_key=key,
                                                                                                  public_key="",
-                                                                                                 address="") for key in private_keys]),
+                                                                                                 address="") for key in private_keys],
+                                                                            redeem_script="",
+                                                                            address=""),
                                              address_output=Address(private_key="",
                                                                     public_key="",
                                                                     address=address_output),

@@ -10,7 +10,7 @@ class Address(BaseModel):
 class MultisigAddress(BaseModel):
     list_address: List[Address]
     redeem_script: Optional[str]
-    p2sh_address: Optional[str]
+    address: Optional[str]
 
 class Transaction(BaseModel):
     transaction_id: Optional[str]
