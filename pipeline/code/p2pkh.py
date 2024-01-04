@@ -38,8 +38,8 @@ class P2PKH_Address(BaseService):
 if __name__ == "__main__":
     p2pkh_address = P2PKH_Address()
 
-    private_key = "cS2Bz7tdXKsFBKiFLGhNFVMrnZVxpFR96GShmtfcc95NdXARLTAZ"
-    address_output = "2MvukeKaPBWwfHJBAZ72P7nm45HKPG91Wg3"
+    private_key = "sample_key"
+    address_output = "sample_address"
     amount = 8000
     fee = 750
     
