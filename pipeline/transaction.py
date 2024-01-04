@@ -25,8 +25,8 @@ class TransactionPipeline(BaseService):
         tx_out = self.p2pkh_address.create_txout(address_output, amount=amount, balance=balance)
         tx_out += self.p2pkh_address.create_txout(self.p2pkh_address.get_address(private_key), amount=remaining, balance=balance)
         tx = self.p2pkh_address.create_transaction(tx_in, tx_out, private_key)
-        # transaction_id = self.p2pkh_address.broadcast_tx(tx)
-        transaction_id = "ahihihi"
+        transaction_id = self.p2pkh_address.broadcast_tx(tx)
+        # transaction_id = "ahihihi"
         if transaction_id:
             transaction.transaction_id = transaction_id
             transaction.timestamp = self.get_timezone()
@@ -50,8 +50,8 @@ class TransactionPipeline(BaseService):
         tx_out = self.multisig_address.create_txout(address_output, amount=amount, balance=balance)
         tx_out += self.multisig_address.create_txout(self.multisig_address.get_address(redeem_script), amount=remaining, balance=balance)
         tx = self.multisig_address.create_transaction(tx_in, tx_out, private_keys)
-        # transaction_id = self.multisig_address.broadcast_tx(tx)
-        transaction_id = "ahihihi"
+        transaction_id = self.multisig_address.broadcast_tx(tx)
+        # transaction_id = "ahihihi"
         if transaction_id:
             transaction.transaction_id = transaction_id
             transaction.timestamp = self.get_timezone()
